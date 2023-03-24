@@ -454,7 +454,6 @@ class Snake(Problem):
     def __init__(self, initial, goal=None):
         super().__init__(initial, goal)
         self.box = (10, 10)
-        self.closestApple = 0
 
     def actions(self, state):
         return self.successor(state).keys()
@@ -508,10 +507,10 @@ class Snake(Problem):
     def successor(self, state):
         successors = dict()
 
-        if self.check_valid(state[0], self.move(state, "s")):
-            successors["ProdolzhiPravo"] = self.move_get_state(state, "s")
         if self.check_valid(state[0], self.move(state, "r")):
             successors["SvrtiDesno"] = self.move_get_state(state, "r")
+        if self.check_valid(state[0], self.move(state, "s")):
+            successors["ProdolzhiPravo"] = self.move_get_state(state, "s")
         if self.check_valid(state[0], self.move(state, "l")):
             successors["SvrtiLevo"] = self.move_get_state(state, "l")
         return successors
@@ -520,11 +519,7 @@ class Snake(Problem):
         head = node.state[0][-1]
         green_apples = node.state[1]
         if green_apples:
-            if self.closestApple == 0:
-                return min(abs(head[0] - apple[0]) + abs(head[1] - apple[1]) for apple in green_apples)
-            else:
-                self.closestApple - + 1
-                return self.closestApple
+            return min(abs(head[0] - apple[0]) + abs(head[1] - apple[1]) for apple in green_apples)
         else:
             return 0
 
@@ -534,5 +529,5 @@ if __name__ == "__main__":
     zeleni_jabolki = [tuple(map(int, input().split(','))) for _ in range(n)]
 
     snake = Snake((((0, 9), (0, 8), (0, 7)), tuple(zeleni_jabolki)))
-    snake = astar_search(snake)
+    snake = recursive_best_first_search(snake)
     print(snake.solution())
