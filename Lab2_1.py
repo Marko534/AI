@@ -453,8 +453,8 @@ class Snake(Problem):
 
     def __init__(self, initial, goal=None):
         super().__init__(initial, goal)
-        self.closestApple = None
         self.box = (10, 10)
+        self.closestApple = 0
 
     def actions(self, state):
         return self.successor(state).keys()
@@ -519,16 +519,15 @@ class Snake(Problem):
     def h(self, node):
         head = node.state[0][-1]
         green_apples = node.state[1]
-        if not green_apples:
-            return 0
-        if self.closestApple not in green_apples:
-            self.closestApple = green_apples[0], abs(head[0] - green_apples[0][0]) + abs(head[1] - green_apples[0][1])
-            for apple in green_apples:
-                if self.closestApple[1]> abs(head[0] - apple[0]) + abs(head[1] - apple[1]):
-                    self.closestApple = apple, abs(head[0] - apple[0]) + abs(head[1] - apple[1])
+        if green_apples:
+            if self.closestApple == 0:
+                return min(abs(head[0] - apple[0]) + abs(head[1] - apple[1]) for apple in green_apples)
+            else:
+                self.closestApple - + 1
+                return self.closestApple
         else:
-            self.closestApple = self.closestApple[0], self.closestApple[1]-1
-        return self.closestApple[1]
+            return 0
+
 
 if __name__ == "__main__":
     n = int(input())
