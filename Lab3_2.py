@@ -1,8 +1,16 @@
 from constraint import *
 
-# def check_count(list):
-# for i in list:
 
+def constraint_size(*list):
+    count = {"T1": 0, "T2": 0, "T3": 0, "T4": 0}
+    for term in list:
+        count[term] += 1
+    ret = True
+    for value in count.values():
+        ret = ret and value <= 4
+    return ret
+
+# def check_
 
 if __name__ == '__main__':
     num = int(input())
@@ -17,7 +25,11 @@ if __name__ == '__main__':
 
     # Tuka definirajte gi promenlivite
     # Poradi nekoja pricina raboti so strings samo do 9
-    # variables = tuple(["1","2", "3","4","5","6","7","8","9","10","11","12","13"])
+    variables = dict()
+    i = 1
+    for key in papers.keys():
+        variables[i] = papers[key]
+        i += 1
 
     domain = [f'T{i + 1}' for i in range(num)]
 
@@ -27,9 +39,10 @@ if __name__ == '__main__':
     problem.addVariables(variables, domain)
 
     # Tuka dodadete gi ogranichuvanjata
-    # problem.addConstraint()
+    problem.addConstraint(constraint_size, variables)
 
-    result = problem.getSolution()
+    results = problem.getSolution()
 
     # Tuka dodadete go kodot za pechatenje
-    print(result)
+    print(results);
+    [print(f"Paper{key} ({variables[key]}): {results[key]}") for key in results.keys()]
