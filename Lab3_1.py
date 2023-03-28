@@ -23,4 +23,5 @@ if __name__ == '__main__':
                                                                                                      19],
         ("Petar_prisustvo", "vreme_sostanok"))
     # ----------------------------------------------------
+    # print(problem.getSolutions())
     [print(solution) for solution in problem.getSolutions()]
