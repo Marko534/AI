@@ -11,29 +11,30 @@ def constraint_size(*list):
     return ret
 
 
-def check_type(type):
-    if __name__ == '__main__':
-        num = int(input())
+def check_type(*list):
+    return all(segment == list[0] for segment in list)
+
+if __name__ == '__main__':
+    num = int(input())
 
     papers = dict()
-    count_by_type = {"AI": 0, "ML": 0, "NLP": 0}
 
     paper_info = input()
     while paper_info != 'end':
         title, topic = paper_info.split(' ')
         papers[title] = topic
-        count_by_type[topic] += 1
         paper_info = input()
 
     # Tuka definirajte gi promenlivite
     # Poradi nekoja pricina raboti so strings samo do 9
     variables = dict()
     i = 1
+    count_by_type = {"AI":list(), "ML":list(), "NLP":list()}
     for key in papers.keys():
         variables[i] = papers[key]
+        count_by_type[variables[i]].append(i)
         i += 1
 
-    print(variables)
     domain = [f'T{i + 1}' for i in range(num)]
 
     problem = Problem(BacktrackingSolver())
@@ -44,10 +45,9 @@ def check_type(type):
     # Tuka dodadete gi ogranichuvanjata
     problem.addConstraint(constraint_size, variables)
     for type in count_by_type:
-        if type < 5:
-            ...
-            # problem.addConstraint(,type)
+        if len( count_by_type[type])<5 and len(count_by_type[type])>0:
+            problem.addConstraint(check_type, count_by_type[type])
     results = problem.getSolution()
 
     # Tuka dodadete go kodot za pechatenje
-    [print(f"Paper{key} ({variables[key]}): {results[key]}") for key in results.keys()]
+    [print(f"Paper{key} ({variables[key]}): {results[key]}") for key in sorted(results.keys())]
