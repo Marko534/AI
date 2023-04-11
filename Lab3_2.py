@@ -10,17 +10,20 @@ def constraint_size(*list):
         ret = ret and value <= 4
     return ret
 
-# def check_
 
-if __name__ == '__main__':
-    num = int(input())
+def check_type (type):
+
+    if __name__ == '__main__':
+        num = int(input())
 
     papers = dict()
+    count_by_type = {"AI": 0, "ML": 0, "NLP": 0}
 
     paper_info = input()
     while paper_info != 'end':
         title, topic = paper_info.split(' ')
         papers[title] = topic
+        count_by_type[topic] += 1
         paper_info = input()
 
     # Tuka definirajte gi promenlivite
@@ -31,6 +34,7 @@ if __name__ == '__main__':
         variables[i] = papers[key]
         i += 1
 
+    print(variables)
     domain = [f'T{i + 1}' for i in range(num)]
 
     problem = Problem(BacktrackingSolver())
@@ -40,9 +44,11 @@ if __name__ == '__main__':
 
     # Tuka dodadete gi ogranichuvanjata
     problem.addConstraint(constraint_size, variables)
-
+    for type in count_by_type:
+        if type < 5:
+            ...
+            # problem.addConstraint(,type)
     results = problem.getSolution()
 
     # Tuka dodadete go kodot za pechatenje
-    print(results);
     [print(f"Paper{key} ({variables[key]}): {results[key]}") for key in results.keys()]
