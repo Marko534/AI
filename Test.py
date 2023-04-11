@@ -5,5 +5,5 @@ def add(stat):
 
 
 if __name__ == '__main__':
+    test = [0] * 10
 
-    print(tuple(range(5,10)))
