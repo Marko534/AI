@@ -11,8 +11,7 @@ def constraint_size(*list):
     return ret
 
 
-def check_type (type):
-
+def check_type(type):
     if __name__ == '__main__':
         num = int(input())
 
