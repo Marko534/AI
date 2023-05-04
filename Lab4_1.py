@@ -1421,3 +1421,4 @@ if __name__ == '__main__':
     predicted_class = classifier.predict(encoded_entry)[0]
 
     print(predicted_class)
+    print(classifier.predict_proba(encoded_entry))
