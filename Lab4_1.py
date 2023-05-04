@@ -1414,7 +1414,7 @@ if __name__ == '__main__':
 
     print(f'Accuracy: {accuracy}')
 
-    entry = [el for el in input().split(',')]
+    entry = [el for el in input().split(' ')]
 
     encoded_entry = encoder.transform([entry])
 
