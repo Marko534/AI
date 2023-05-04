@@ -15,4 +15,5 @@ if __name__ == '__main__':
         disc[i] = i + 1
 
     print(disc)
-    print(disc.index(3))
+    print(disc.remove(3))
+    print(disc)
