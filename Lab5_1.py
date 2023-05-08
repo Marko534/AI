@@ -1420,6 +1420,8 @@ if __name__ == '__main__':
 
     print(f'Accuracy: {accuracy}')
 
+    features_importances = list(classifier.feature_importances_)
+
     most_important_feature = features_importances.index(max(features_importances))
     print(f'Most important feature: {most_important_feature}')
 
