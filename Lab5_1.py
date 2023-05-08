@@ -1389,7 +1389,6 @@ if __name__ == '__main__':
 
     trainingFactor = 1-int(input()) / 100.0
     criterion = input()
-
     test_set = dataset[:int(trainingFactor * len(dataset))]
     test_x = [row[:-1] for row in test_set]
     test_y = [row[-1] for row in test_set]
