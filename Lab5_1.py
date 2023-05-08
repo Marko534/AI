@@ -1,7 +1,6 @@
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.tree import DecisionTreeClassifier
 
-
 if __name__ == '__main__':
     dataset = [['C', 'S', 'O', '1', '2', '1', '1', '2', '1', '2', '0'],
                ['D', 'S', 'O', '1', '3', '1', '1', '2', '1', '2', '0'],
@@ -1388,8 +1387,9 @@ if __name__ == '__main__':
     encoder = OrdinalEncoder()
     encoder.fit([row[:-1] for row in dataset])
 
-    trainingFactor = int(input())/100.0
+    trainingFactor = 1-int(input()) / 100.0
     criterion = input()
+
     test_set = dataset[:int(trainingFactor * len(dataset))]
     test_x = [row[:-1] for row in test_set]
     test_y = [row[-1] for row in test_set]
@@ -1400,9 +1400,8 @@ if __name__ == '__main__':
     train_y = [row[-1] for row in train_set]
     train_x = encoder.transform(train_x)
 
-
     # classifier = DecisionTreeClassifier(criterion='entropy', max_depth=5, max_leaf_nodes=20, random_state=0)
-    classifier = DecisionTreeClassifier(criterion= criterion, random_state=0)
+    classifier = DecisionTreeClassifier(criterion=criterion, random_state=0)
     classifier.fit(train_x, train_y)
 
     print(f'Depth: {classifier.get_depth()}')
@@ -1420,10 +1419,10 @@ if __name__ == '__main__':
 
     print(f'Accuracy: {accuracy}')
 
-    features_importances = list(classifier.feature_importances_)
+    features_importance = list(classifier.feature_importances_)
 
-    most_important_feature = features_importances.index(max(features_importances))
+    most_important_feature = features_importance.index(max(features_importance))
     print(f'Most important feature: {most_important_feature}')
 
-    least_important_feature = features_importances.index(min(features_importances))
+    least_important_feature = features_importance.index(min(features_importance))
     print(f'Least important feature: {least_important_feature}')
