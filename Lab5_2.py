@@ -199,11 +199,5 @@ if __name__ == '__main__':
 
     print(classifier.predict([data])[0])
 
-    features_importances = list(classifier.feature_importances_)
-    print(f'Feature importances: {features_importances}')
+    print(classifier.predict_proba([data])[0])
 
-    most_important_feature = features_importances.index(max(features_importances))
-    print(f'Most important feature: {most_important_feature}')
-
-    least_important_feature = features_importances.index(min(features_importances))
-    print(f'Least important feature: {least_important_feature}')
