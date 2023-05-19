@@ -422,4 +422,47 @@ data = [
      0.1302, 1]]
 
 if __name__ == '__main__':
-    ...
+    zero_classes = [x for x in data if x[-1] == 0]
+    one_classes = [x for x in data if x[-1] == 1]
+
+    train_set = zero_classes[:int(len(zero_classes) * 0.8)] + one_classes[:int(len(one_classes) * 0.8)]
+    val_set = zero_classes[int(len(zero_classes) * 0.8):] + one_classes[int(len(one_classes) * 0.8):]
+
+    train_x = [x[:-1] for x in train_set]
+    train_y = [x[-1] for x in train_set]
+    val_x = [x[:-1] for x in val_set]
+    val_y = [x[-1] for x in val_set]
+
+    learning_rate = float(input())
+    epoch_num = int(input())
+
+    classifier = MLPClassifier(6, activation='tanh', learning_rate_init=learning_rate, max_iter=epoch_num,
+                               random_state=0)
+
+    classifier.fit(train_x, train_y)
+
+    test_predictions = classifier.predict(train_x)
+    test_acc = 0
+    for true, pred in zip(train_y, test_predictions):
+        if true == pred:
+            test_acc += 1
+
+    test_acc = test_acc / len(train_y)
+
+
+    acc = 0
+    predictions = classifier.predict(val_x)
+    for true, pred in zip(val_y, predictions):
+        if true == pred:
+            acc += 1
+
+    acc = acc / len(val_x)
+
+
+    if test_acc >=1.15*acc:
+        print("Se sluchuva overfitting")
+    else:
+        print("Ne se sluchuva overfitting")
+    print(f'Tochnost so trenirachko mnozhestvo: {test_acc}')
+
+    print(f'Tochnost so validacisko mnozhestvo: {acc}')
