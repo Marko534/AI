@@ -1404,7 +1404,7 @@ if __name__ == '__main__':
     accuracy = 0
     for i in range(len(test_set)):
         predicted_case = classifier.predict([test_x[i]])[0]
-        if predicted_case == test_y[-1]:
+        if predicted_case == test_y[i]:
             accuracy += 1
 
     accuracy = accuracy / len(test_set)
@@ -1412,6 +1412,6 @@ if __name__ == '__main__':
 
     inp = encoder.transform([inp])
 
-    print( classifier.predict(inp)[0])
-
     print(accuracy)
+    print( classifier.predict(inp)[0])
+    print( classifier.predict_proba(inp))
