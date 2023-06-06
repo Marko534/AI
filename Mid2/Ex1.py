@@ -1407,4 +1407,11 @@ if __name__ == '__main__':
         if predicted_case == test_y[-1]:
             accuracy += 1
 
-    print(f'Accuracy: {accuracy}')
+    accuracy = accuracy / len(test_set)
+    inp = input().split(' ')
+
+    inp = encoder.transform([inp])
+
+    print( classifier.predict(inp)[0])
+
+    print(accuracy)
