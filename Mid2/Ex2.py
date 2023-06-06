@@ -53,15 +53,15 @@ if __name__ == '__main__':
     train_y = [row[-1] for row in train_set]
 
     test_set = dataset[int(0.85 * len(dataset)):]
-    train_x = [row[:-1] for row in test_set]
-    train_y = [row[-1] for row in test_set]
+    test_x = [row[:-1] for row in test_set]
+    test_y = [row[-1] for row in test_set]
 
     classifier = GaussianNB()
     classifier.fit(train_x, train_y)
 
     accuracy = 0
     for i in range(len(test_set)):
-        if classifier.predict([train_x[i]])[0] == train_y[i]:
+        if classifier.predict([test_x[i]])[0] == test_y[i]:
             accuracy += 1
 
     accuracy = accuracy / len(test_set)
