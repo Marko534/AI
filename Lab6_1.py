@@ -458,7 +458,6 @@ if __name__ == '__main__':
 
     acc = acc / len(val_x)
 
-
     if test_acc >=1.15*acc:
         print("Se sluchuva overfitting")
     else:

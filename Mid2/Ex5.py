@@ -425,11 +425,11 @@ if __name__ == '__main__':
     zero_class = [row for row in data if row[-1] == 0]
     one_class = [row for row in data if row[-1] == 1]
 
-    train_set = zero_class[: int(0.8 * len(zero_class))] + one_class[: int(0.8 * len(zero_class))]
+    train_set = zero_class[: int(0.8 * len(zero_class))] + one_class[: int(0.8 * len(one_class))]
     train_x = [row[:-1] for row in train_set]
     train_y = [row[-1] for row in train_set]
 
-    val_set = zero_class[int(0.8 * len(zero_class)):] + one_class[int(0.8 * len(zero_class)):]
+    val_set = zero_class[int(0.8 * len(zero_class)):] + one_class[int(0.8 * len(one_class)):]
     val_x = [row[:-1] for row in val_set]
     val_y = [row[-1] for row in val_set]
 
