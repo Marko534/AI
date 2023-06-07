@@ -445,11 +445,13 @@ def moddel_accuracy(train_set, test_set, type):
     else:
         return MLP_accuracy(train_set, test_set)
 
+
 def merge_list(lists):
     list = []
     for i in lists:
         list.extend(i)
     return list
+
 
 def NB_accuracy(train_set, test_set):
     classifier = GaussianNB()
@@ -489,7 +491,6 @@ def MLP_accuracy(train_set, test_set):
     return accuracy / len(test_set)
 
 
-
 if __name__ == '__main__':
     warnings.filterwarnings('ignore', category=ConvergenceWarning)
     model = input()
@@ -503,11 +504,10 @@ if __name__ == '__main__':
 
     print(f'Prosechna tochnost: {average / 4}')
     max_value = accuracy.index(max(accuracy))
-    # print(max_value)
-    # print( accuracy)
+    print(max_value)
+    print(accuracy)
     col = int(input())
-    # categorised_data = [div[:col] + div[col + 1:] for div in categorised_data]
-
+    categorised_data = [div[:col] + div[col + 1:] for div in categorised_data]
 
     print(
         f'Tochnost so otstraneta kolona: {moddel_accuracy(categorised_data[0:max_value] + categorised_data[max_value + 1:], categorised_data[max_value], model)}')
