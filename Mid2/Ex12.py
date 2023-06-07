@@ -414,63 +414,71 @@ if __name__ == '__main__':
     type = input()
     col = int(input())
 
-    train_set = dataset[:X]
+    train_set = dataset[X:]
     train_x = [row[:-1] for row in train_set]
     train_y = [row[-1] for row in train_set]
 
-    test_set = dataset[X:]
+    test_set = dataset[:X]
     test_x = [row[:-1] for row in test_set]
     test_y = [row[-1] for row in test_set]
 
     if type == 'NB':
-        classifier1 = GaussianNB()
+        classifier = GaussianNB()
     elif type == 'DT':
-        classifier1 = DecisionTreeClassifier()
+        classifier = DecisionTreeClassifier()
     elif type == 'NN':
-        classifier1 = MLPClassifier(3, activation='reul', learning_rate_init=0.003, max_iter=200)
+        classifier = MLPClassifier(3, activation='reul', learning_rate_init=0.003, max_iter=200)
     else:
         classifier = None
 
-    classifier1.fit(train_x, train_y)
+    classifier.fit(train_x, train_y)
 
     acc1 = 0
     for i in range(len(test_set)):
-        if classifier1.predict([test_x[i]])[0] == test_y[i]:
+        if classifier.predict([test_x[i]])[0] == test_y[i]:
             acc1 += 1
     acc1 = acc1 / len(test_set)
 
     train_x = [row[:col] + row[col + 1:] for row in train_x]
     test_x = [row[:col] + row[col + 1:] for row in test_x]
 
-    if type == 'NB':
-        classifier2 = GaussianNB()
-    elif type == 'DT':
-        classifier2 = DecisionTreeClassifier()
-    elif type == 'NN':
-        classifier2 = MLPClassifier(3, activation='reul', learning_rate_init=0.003, max_iter=200)
-    else:
-        classifier = None
-
-    classifier2.fit(train_x, train_y)
+    classifier.fit(train_x, train_y)
 
     acc2 = 0
     for i in range(len(test_set)):
-        if classifier2.predict([test_x[i]])[0] == test_y[i]:
+        if classifier.predict([test_x[i]])[0] == test_y[i]:
             acc2 += 1
 
     acc2 = acc2 / len(test_set)
 
-    print(acc1)
-    print(acc2)
+    if acc2 > acc1:
+        train_set = dataset[X:]
+        train_x = [row[:-1] for row in train_set]
+        train_y = [row[-1] for row in train_set]
 
-    # if acc2 < acc1:
-    #     print('Klasifiktorot so site koloni ima pogolema tochnost')
-    #     TP = 0
-    #     FP = 0
-    #     for i in range(len(test_set)):
-    #         if classifier.predict([test_x[i]]) == 1:
-    #             if test_y[i] == 1:
-    #                 TP += 1
-    #             else:
-    #                 FP += 1
-    #     print(TP / (TP + FP))
+        test_set = dataset[:X]
+        test_x = [row[:-1] for row in test_set]
+        test_y = [row[-1] for row in test_set]
+        classifier.fit(train_x, train_y)
+
+        print('Klasifiktorot so site koloni ima pogolema tochnost')
+        TP = 0
+        FP = 0
+        for i in range(len(test_set)):
+            if classifier.predict([test_x[i]])[0] == 1:
+                if test_y[i] == 1:
+                    TP += 1
+                else:
+                    FP += 1
+        print(TP / (TP + FP))
+    elif acc2 == acc1:
+        print('Klasifikatorite imaat ista tochnost')
+        TP = 0
+        FP = 0
+        for i in range(len(test_set)):
+            if classifier.predict([test_x[i]])[0] == 1:
+                if test_y[i] == 1:
+                    TP += 1
+                else:
+                    FP += 1
+        print(TP / (TP + FP))
