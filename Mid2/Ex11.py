@@ -80,7 +80,7 @@ if __name__ == '__main__':
         class_sets.append([row for row in dataset if row[-1] == i])
     classifiers = []
 
-    #NB
+    # NB
     classifiers.append(GaussianNB())
     NB_set = []
     NB_x = []
@@ -90,5 +90,49 @@ if __name__ == '__main__':
         NB_x += [row[:-1] for row in NB_set[i]]
         NB_y += [row[-1] for row in NB_set[i]]
 
-    print(NB_x)
-    print(NB_y)
+    classifiers[0].fit(NB_x, NB_y)
+
+    # TREE
+    classifiers.append(DecisionTreeClassifier())
+    TREE_set = []
+    TREE_x = []
+    TREE_y = []
+    for i in range(3):
+        TREE_set.append(class_sets[i][int(x1 * len(class_sets[i])):int(x2 * len(class_sets[i]))])
+        TREE_x += [row[:-1] for row in TREE_set[i]]
+        TREE_y += [row[-1] for row in TREE_set[i]]
+
+    classifiers[1].fit(TREE_x, TREE_y)
+
+    # FOREST
+    classifiers.append(RandomForestClassifier(3))
+    FOREST_set = []
+    FOREST_x = []
+    FOREST_y = []
+    for i in range(3):
+        FOREST_set.append(class_sets[i][:int(x2 * len(class_sets[i]))])
+        FOREST_x += [row[:-1] for row in FOREST_set[i]]
+        FOREST_y += [row[-1] for row in FOREST_set[i]]
+
+    classifiers[2].fit(FOREST_x, FOREST_y)
+
+    #TEST
+    test_set = []
+    test_x =[]
+    test_y = []
+    for i in range(3):
+        test_set.append(class_sets[i][int(x2 * len(class_sets[i])):])
+        test_x += [row[:-1] for row in test_set[i]]
+        test_y += [row[-1] for row in test_set[i]]
+
+    accuracy = 0
+
+    for i in range(len(test_x)):
+        numb_true = 0
+        for j in range(3):
+            if classifiers[j].predict([test_x[i]])[0] == test_y[i]:
+                numb_true += 1
+        if numb_true >=2 :
+            accuracy += 1
+
+    print(f'Tochnost: {accuracy / len(test_x)}')
