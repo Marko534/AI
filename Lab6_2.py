@@ -1714,7 +1714,7 @@ data = [['M', 17.99, 10.38, 122.8, 1001.0, 0.1184, 0.2776, 0.3001, 0.1471, 0.241
 if __name__ == '__main__':
     warnings.filterwarnings('ignore', category=ConvergenceWarning)
     malignant = [x for x in data if x[0] == "M"]
-    benign =  [x for x in data if x[0] == "B"]
+    benign = [x for x in data if x[0] == "B"]
 
     train_set = malignant[:int(0.7 * len(malignant))] + benign[:int(0.7 * len(benign))]
     test_set = malignant[int(0.7 * len(malignant)):] + benign[int(0.7 * len(benign)):]
