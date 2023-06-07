@@ -471,7 +471,23 @@ def NB_accuracy(train_set, test_set):
 
 
 def MLP_accuracy(train_set, test_set):
-    ...
+    classifier = MLPClassifier(50, activation="relu", learning_rate_init=0.001)
+    train_set = merge_list(train_set)
+
+    train_x = [row[:-1] for row in train_set]
+    train_y = [row[-1] for row in train_set]
+
+    classifier.fit(train_x, train_y)
+
+    test_x = [row[:-1] for row in test_set]
+    test_y = [row[-1] for row in test_set]
+    accuracy = 0
+    for i in range(len(test_set)):
+        if classifier.predict([test_x[i]])[0] == test_y[i]:
+            accuracy += 1
+
+    return accuracy / len(test_set)
+
 
 
 if __name__ == '__main__':
@@ -487,9 +503,11 @@ if __name__ == '__main__':
 
     print(f'Prosechna tochnost: {average / 4}')
     max_value = accuracy.index(max(accuracy))
-
+    # print(max_value)
+    # print( accuracy)
     col = int(input())
-    categorised_data = [div[:col] + div[col + 1:] for div in categorised_data]
+    # categorised_data = [div[:col] + div[col + 1:] for div in categorised_data]
+
 
     print(
         f'Tochnost so otstraneta kolona: {moddel_accuracy(categorised_data[0:max_value] + categorised_data[max_value + 1:], categorised_data[max_value], model)}')
